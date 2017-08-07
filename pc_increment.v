@@ -2,7 +2,7 @@
 Program Counter Incrementer
 */
 
-module pc_incrementer(pc_current, stall, increment_by, pc_next);
+module pc_increment(pc_current, stall, increment_by, pc_next);
 input [15:0] pc_current;
 input [1:0] increment_by;
 input stall;

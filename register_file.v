@@ -5,19 +5,22 @@
 // R14 (LR) - Link Register
 // R15 (PC) - Program Counter
 
-module register_file(clock,WE,InData,WrReg,ReadA,ReadB,OutA,OutB); 
+module register_file(clock, rst, WE,InData,WrReg,ReadA,ReadB,OutA,OutB); 
 
     input [3:0] WrReg, ReadA, ReadB; 
-    input WE,clock; 
+    input WE,clock, rst; 
     input [15:0] InData; 
     output [15:0] OutA,OutB; 
      
     reg [15:0] OutA, OutB;//2 16-bit output reg 
     reg signed [15:0] regfile[15:0];//16 16-bit registers 
-     
-    initial begin 
-        OutA = -2072; //random values for initial 
-        OutB = -367; 
+   
+    always@(clock)
+    begin
+     if(rst)
+		  begin
+        OutA = 0; //random values for initial 
+        OutB = 0; 
         
 		  regfile[0] = 16'h0000;
 	     regfile[1] = 16'h0000;
@@ -29,12 +32,15 @@ module register_file(clock,WE,InData,WrReg,ReadA,ReadB,OutA,OutB);
 	     regfile[7] = 16'h0000;
 	     
 	     regfile[13] = 16'h2000; // Value for Stack Pointer
-        regfile[15] = 16'h0000;
+        regfile[15] = 16'h0000; 
+
+        end 
     end
-     
+ 
     always@(clock,InData,WrReg,WE) 
     begin 
-      if(WE && clock) // For transferring the data on the positive level of the clock
+      
+       if(WE && clock) // For transferring the data on the positive level of the clock
         begin 
          regfile[WrReg]<=InData;//write to register 
          $display("Does WrReg: %d Data: %d",WrReg,InData); 

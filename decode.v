@@ -1,4 +1,3 @@
-`timescale 1 ns / 1 ps
 /**
 Instruction Decode block
 This block accepts instuction code as an input.
@@ -24,7 +23,7 @@ localparam  push=0, pop=1, sub_sp=2, cmp=3, movs=4, mov=5, ldr=6, str=7,
 end*/
 
 always @ (data) begin
-
+   
 	case(data[15:12]) 
 
 			4'hB: if(data[11:10]==2'b01) begin
@@ -120,8 +119,8 @@ always @ (data) begin
 			4'hA: //ADD_SP
 				begin
 				$display("Load Address");
-				reg1 <= {1'b0,data[10:8]};
-				reg2 <= 4'b1101; //SP
+				reg2 <= {1'b0,data[10:8]};
+				reg1 <= 4'b1101; //SP
 				offset <= (data << 2) & 4'h03ff; 
 				opcode <= add_sp;
 				end
