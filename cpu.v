@@ -7,7 +7,11 @@ output wire mem_en, mem_read, mem_write;
 wire [15:0]addr;
 input clk, reset;
 input [15:0]din;
-wire [15:0] new_pc, instruction;
+wire [15:0] new_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
+wire instr_fetch, ALU_src, mem_reg, reg_write; 
+wire [3:0]reg1, reg2, opcode, ALU_op, wr_reg;
+
+wire [11:0]offset;
 
 //4096*2B=8192B
 parameter MEM_DEPTH = 2**12;
@@ -84,7 +88,7 @@ sign_extend sg1(
 
 alu a1(
 .opcode(ALU_op), 
-.inA(Reg_Data1), 
+.inA(Reg_data1), 
 .inB(ALU_mux),
 .in_apsr(apsr_o), 
 .out(ALU_out), 
