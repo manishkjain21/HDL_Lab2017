@@ -20,7 +20,7 @@ cpu cp1(.clk(clk),
 initial begin 
 	clk = 0; 
 	reset = 0; 
-	#5 din = 16'hB805;
+	#5 din = 16'hAF00;
    #20 $finish;
 	end  
 

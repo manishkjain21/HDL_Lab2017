@@ -21,7 +21,7 @@ initial begin
 	clk = 0; 
 	reset = 0; 
 	#5 din = 16'hB805;
-   #15 $finish;
+   #20 $finish;
 	end  
 
 always begin
