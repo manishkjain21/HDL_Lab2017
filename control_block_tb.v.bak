@@ -8,8 +8,7 @@ reg [3:0]opcode;
 wire mem_reg, reg_write, branch, mem_read, mem_write, mem_enable, ALU_src, reg_dst;
 wire [3:0]ALU_op;
 
-control_block cbk1(.clk(),
-				  .rst(reset) 
+control_block cbk1(.clk(), 
 				  .opcode(opcode), 
 				  .mem_reg(mem_reg), 
               .reg_write(reg_write), 

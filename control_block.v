@@ -13,7 +13,7 @@ output reg ALU_src, reg_dst, Intr_fetch;
 localparam  push=0,    pop=1,    sub_sp=2,      cmp=3,       movs=4,      mov=5,   ldr=6,   str=7, 
             ldr_nop=8, add_sp=9, branch_nc= 10, adds_3op=11, branch_c=12, strb=13, ldrb=14, adds_2op=15;
 
-always @(posedge clk) begin
+always @(opcode) begin
 	
 	if(rst) begin
 					$display("Reset %d:", opcode);
@@ -43,7 +43,7 @@ always @(posedge clk) begin
 					ALU_op     = opcode;
 					ALU_src    = 0;   // For Reg_data_2
 					reg_dst    = 1;   // Register_Destination -0 - reg2, 1-reg3 selected
-					Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+					Intr_fetch = 0;   //intrs_out - 1 ; mem_data_out - 0
 		   end
       	add_sp: begin
 				   //Set the Control Block

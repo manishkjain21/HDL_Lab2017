@@ -45,7 +45,7 @@ pc_increment pc_inc1(.pc_current (pc_out),
 	      .pc_next(new_pc));
 
 decode d1(
-.data(dout), 
+.data(dout), //change this to instr_out
 .reg1(reg1), 
 .reg2(reg2), 
 .offset(offset), 
