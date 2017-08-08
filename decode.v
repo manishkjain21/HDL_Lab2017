@@ -169,6 +169,7 @@ always @ (data) begin
 				begin
 					$display("Conditional Branching");
 					offset = {8'b0, data[7:0]};
+					cond = data[11:8];
 					opcode = BRANCH_C;
 				end
 
