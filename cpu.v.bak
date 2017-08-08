@@ -127,7 +127,7 @@ mux21 m5(
 
 demux12 m4(
 .in(din), 
-.sel(Intr_fetch), 
+.sel(instr_fetch), 
 .outA(demux_reg), 
 .outB(instr_out)
 );

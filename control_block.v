@@ -43,7 +43,7 @@ always @(posedge clk) begin
 					ALU_op     = opcode;
 					ALU_src    = 0;   // For Reg_data_2
 					reg_dst    = 1;   // Register_Destination -0 - reg2, 1-reg3 selected
-					Intr_fetch = 1;   //intrs_out - 0 ; mem_data_out - 1
+					Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 		   end
       	add_sp: begin
 				   //Set the Control Block
