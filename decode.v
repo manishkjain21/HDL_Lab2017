@@ -22,48 +22,48 @@ always @ (data) begin
 			4'hB: if(data[11:10]==2'b01) begin
 					//PUSH rlist, lr
 					$display("Push to Stack");				
-					reg1 <= 4'b0111; //R7
-					reg2 <= 4'b1110; //LR
-					reg3 <= 4'b0;
-					offset <= 16'b0;
-					opcode <= push;
+					reg1 = 4'b0111; //R7
+					reg2 = 4'b1110; //LR
+					reg3 = 4'b0;
+					offset = 16'b0;
+					opcode = push;
 				end
 			    else if (data[11:10]==2'b11) begin
 					//POP rlist, lr
 					$display("Pull from Stack");
-					reg1 <= 4'b0111; //R7
-					reg2 <= 4'b1110; //LR
-					reg3 <= 4'b0;
-					offset <= 16'b0;
-					opcode <= pop;
+					reg1 = 4'b0111; //R7
+					reg2 = 4'b1110; //LR
+					reg3 = 4'b0;
+					offset = 16'b0;
+					opcode = pop;
 				end
 			    else begin
 					//SUB SP,Imm
 					$display("Subtract offset from Static Pointer");
-					reg1 <= 4'b1101; //SP
-					reg2 <= 4'b0;
-					reg3 <= 4'b0;
-					offset <= ((data << 2) & 16'h01ff);
-					opcode <= sub_sp;
+					reg1 = 4'b1101; //SP
+					reg2 = 4'b0;
+					reg3 = 4'b0;
+					offset = ((data << 2) & 16'h01ff);
+					opcode = sub_sp;
 				end
 
 			4'h2: if(data[11]==1'b1) begin
 					//CMP r3, imm
 					$display("Compare Immediate");
-					reg1 <= 4'b0;
-					reg2 <= 4'b0;
-					reg3 <= {1'b0, data[10:8]};
-					offset <= {8'b0, data[7:0]};
-					opcode <= cmp;
+					reg1 = 4'b0;
+					reg2 = 4'b0;
+					reg3 = {1'b0, data[10:8]};
+					offset = {8'b0, data[7:0]};
+					opcode = cmp;
 				end
 			    else begin
 					//MOVS r3, imm
 					$display("Move Immediate");
-					reg1 <= 4'b0;
-					reg2 <= 4'b0;
-					reg3 <= {1'b0, data[10:8]};
-					offset <= {8'b0, data[7:0]};	
-					opcode <= movs;			
+					reg1 = 4'b0;
+					reg2 = 4'b0;
+					reg3 = {1'b0, data[10:8]};
+					offset = {8'b0, data[7:0]};	
+					opcode = movs;			
 				end
 
 			4'h4: if(data[11]==1'b0) begin
@@ -71,108 +71,108 @@ always @ (data) begin
 				$display("High Register Operation Exchange");
 				if(data[9:8] == 2'b10 && data[7:6] == 2'b01) begin
 					//MOV Rd, Hs
-					reg1 <= 4'b0;
-					reg2 <= {1'b1, data[2:0]};
-					reg3 <= {1'b0, data[5:3]};
-					opcode <= mov;
+					reg1 = 4'b0;
+					reg2 = {1'b1, data[2:0]};
+					reg3 = {1'b0, data[5:3]};
+					opcode = mov;
 				end
 				else if(data[9:8] == 2'b10 && data[7:6] == 2'b10) begin
 					//MOV Hd, Rs
-					reg1 <= 4'b0;
-					reg2 <= {1'b0, data[5:3]};
-					reg3 <= {1'b1, data[2:0]};
-					offset <= 16'b0;
-					opcode <= mov;
+					reg1 = 4'b0;
+					reg2 = {1'b0, data[5:3]};
+					reg3 = {1'b1, data[2:0]};
+					offset = 16'b0;
+					opcode = mov;
 				end
 				else if(data[9:8] == 2'b10 && data[7:6] == 2'b11) begin
 					//MOV Hd, Hs
-					reg1 <= 4'b0;
-					reg2 <= {1'b1,data[5:3]};
-					reg3 <= {1'b1,data[2:0]};
-					opcode <= mov;
+					reg1 = 4'b0;
+					reg2 = {1'b1,data[5:3]};
+					reg3 = {1'b1,data[2:0]};
+					opcode = mov;
 				end
 				end
 			    else begin
 					//LDR r3, [pc, imm]
 					$display("PC Relative Load");
-					reg1 <= 4'b1111; //PC
-					reg2 <= 4'b0;
-					reg3 <= {1'b0, data[10:8]};
-					offset <= (data << 2) & 16'h03ff; 
-					opcode <= ldr;
+					reg1 = 4'b1111; //PC
+					reg2 = 4'b0;
+					reg3 = {1'b0, data[10:8]};
+					offset = (data << 2) & 16'h03ff; 
+					opcode = ldr;
 				end
 
 			4'h6: begin
-				reg1 <= 4'b0;
-				reg2 <= {1'b0, data[5:3]};
-				reg3 <= {1'b0, data[2:0]};
-				offset <= {11'b0, data[10:6]}; 
+				reg1 = 4'b0;
+				reg2 = {1'b0, data[5:3]};
+				reg3 = {1'b0, data[2:0]};
+				offset = {11'b0, data[10:6]}; 
 				if(data[11]==1'b0) begin
 					//STR r2, [r3, imm]
 					$display("Store Immediate");					
-					opcode <= str;
+					opcode = str;
 				end
 			    else begin
 				//LDR(NOP)
 					$display("Load Immediate"); 
-					opcode <= ldr_nop;
+					opcode = ldr_nop;
 				end
 				end
 
 			4'hA: //ADD_SP -> add r7, sp, imm
 				begin
 				$display("Load Address");
-				reg1 <= 4'b1101; //SP
-				reg2 <= 4'b0;
-				reg3 <= {1'b0, data[10:8]};
-				offset <= (data << 2) & 16'h03ff; 
-				opcode <= add_sp;
+				reg1 = 4'b1101; //SP
+				reg2 = 4'b0;
+				reg3 = {1'b0, data[10:8]};
+				offset = (data << 2) & 16'h03ff; 
+				opcode = add_sp;
 				end
 
 			4'hE: //branch nc
 				begin
 				$display("Unconditional Branch");
-				reg1 <= 4'b0;
-				reg2 <= 4'b0;
-				reg3 <= 4'b0;
-				offset <= (data[10:0] << 1) & 16'h07ff;
-				opcode <= branch_nc;
+				reg1 = 4'b0;
+				reg2 = 4'b0;
+				reg3 = 4'b0;
+				offset = (data[10:0] << 1) & 16'h07ff;
+				opcode = branch_nc;
 				end
 			
 			4'h1: //ADDS with 3 operands -> adds r2, r3, imm
 				begin
 				$display("Add with 3 operands");
-				reg1 <= 4'b0;
-				reg2 <= {1'b0, data[5:3]};
-				reg3 <= {1'b0, data[2:0]};
-				offset <= {13'b0, data[8:6]};
-				opcode <= adds_3op;
+				reg1 = 4'b0;
+				reg2 = {1'b0, data[5:3]};
+				reg3 = {1'b0, data[2:0]};
+				offset = {13'b0, data[8:6]};
+				opcode = adds_3op;
 				end
 
 			4'hD: //branch c
 				begin
 				$display("Conditional Branching");
-				reg1 <= 4'b0;
-				reg2 <= 4'b0;
-				reg3 <= 4'b0;
-				offset <= {8'b0, data[7:0]};
-				opcode <= branch_c;
+				reg1 = 4'b0;
+				reg2 = 4'b0;
+				reg3 = 4'b0;
+				offset = {8'b0, data[7:0]};
+				opcode = branch_c;
 				end
 
 			4'h5: begin
-				reg1 <= data[8:6]; //offset register
-				reg2 <= data[5:3]; //base register
-				reg3 <= data[2:0]; //destination register
-				offset <= {8'b0, data[7:0]};
+				reg1 = data[8:6]; //offset register
+				reg2 = data[5:3]; //base register
+				reg3 = data[2:0]; //destination register
+				offset = {8'b0, data[7:0]};
 				if(data[11]==1'b0) begin
 					//strb r3, [r2, r1]
 					$display("Store with Register Offset");
-					opcode <= strb;
+					opcode = strb;
 				end
 			    else begin
 					//ldrb r3, [r3, r2]
 					$display("Load with register Offset");
-					opcode <= ldrb;
+					opcode = ldrb;
 				end
 				end
 
@@ -180,20 +180,20 @@ always @ (data) begin
 				if(data[0] == 1'b0) begin
 					//adds with 2 operands -> add r3, imm
 					$display("Add Immediate");
-					reg1 <= 4'b0;
-					reg2 <= 4'b0;
-					reg3 <= {1'b0,data[10:8]};
-					offset <= {8'b0, data[7:0]};
-					opcode <= adds_2op;
+					reg1 = 4'b0;
+					reg2 = 4'b0;
+					reg3 = {1'b0,data[10:8]};
+					offset = {8'b0, data[7:0]};
+					opcode = adds_2op;
 				end
 				end
 
 			default: begin
-						reg1 <= 4'b0;
-						reg2 <= 4'b0;
-						reg3 <= 4'b0;
-						offset <= 16'b0;
-						opcode <= 4'b0;
+						reg1 = 4'b0;
+						reg2 = 4'b0;
+						reg3 = 4'b0;
+						offset = 16'b0;
+						opcode = 4'b0;
 					end
 	
 		endcase
