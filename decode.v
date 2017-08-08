@@ -190,13 +190,11 @@ always @ (data) begin
 				end
 
 				4'h3: begin
-					if(data[0] == 1'b0) begin
-						//adds with 2 operands -> add r3, imm
-						$display("Add Immediate");
-						reg3 = {1'b0,data[10:8]};
-						offset = {8'b0, data[7:0]};
-						opcode = ADDS_2OP;
-					end
+					//adds with 2 operands -> add r3, imm
+					$display("Add Immediate");
+					reg3 = {1'b0,data[10:8]};
+					offset = {8'b0, data[7:0]};
+					opcode = ADDS_2OP;
 				end
 
 				default: begin
