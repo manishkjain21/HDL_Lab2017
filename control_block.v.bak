@@ -232,7 +232,7 @@ always @(posedge clk) begin
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
 				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 			end
-			adds_2op:begin
+			add2_2op:begin
 					//Set the Control Block
 					mem_reg    = 1;   // Take Data from the ALU for writing
 					reg_write  = 1;   // write needed to register file

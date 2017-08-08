@@ -10,7 +10,7 @@ reg [15:0]din;
 
 cpu cp1(.clk(clk), 
 .reset(reset), 
-.addr_tb(.addr_tb), 
+.addr_tb(addr_tb), 
 .mem_en(mem_en), 
 .mem_read(mem_read), 
 .mem_write(mem_write), 
@@ -20,7 +20,7 @@ cpu cp1(.clk(clk),
 initial begin 
 	clk = 0; 
 	reset = 0; 
-	#5 din = 16'hB805;
+	#5 din = 16'hAF00;
    #20 $finish;
 	end  
 

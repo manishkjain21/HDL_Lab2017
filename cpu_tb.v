@@ -10,7 +10,7 @@ reg [15:0]din;
 
 cpu cp1(.clk(clk), 
 .reset(reset), 
-.addr_tb(.addr_tb), 
+.addr_tb(addr_tb), 
 .mem_en(mem_en), 
 .mem_read(mem_read), 
 .mem_write(mem_write), 
@@ -25,7 +25,7 @@ initial begin
 	end  
 
 always begin
-	#5 clk =!clk 
+	#5 clk =!clk ;
 	end
 
 always begin
