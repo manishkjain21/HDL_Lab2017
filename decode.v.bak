@@ -1,10 +1,10 @@
-<<<<<<< HEAD
-timescale 1 ns / 1 ps
+/*
+`timescale 1 ns / 1 ps*/
 /**
 Instruction Decode block
 This block accepts instuction code as an input.
 The output of the blocks are two registers in operation and an offset, if applicable.
-*/
+*//*
 module decode(
 	data,
 	reset,
@@ -210,7 +210,8 @@ always @ (data) begin
 		end
 	end
 
-=======
+enmodule
+**/
 `timescale 1 ns / 1 ps
 /**
 Instruction Decode block
@@ -277,6 +278,7 @@ always @ (data) begin
 						//SUB SP,Imm
 						$display("Subtract offset from Static Pointer");
 						reg1 = 4'b1101; //SP
+						reg3 = 4'b1101
 						offset = ((data << 2) & 16'h01ff);
 						opcode = SUB_SP;
 					end

@@ -26,21 +26,23 @@ memory mem1 (.clk(clk),
 	     .dout(din_1));
 
 initial begin 
+	$display("\t time, \t clk, \t reset, \t din, \t addr_tb, \t mem_en, \t mem_read, \t mem_write");
+	$monitor("%d, \t%b, \t%b, \t%h, \t%h, \t%b, \t%b, \t%b",
+         $time, clk, reset, din, addr_tb, mem_en, mem_read, mem_write);	
 	clk = 1; 
 	reset = 1; 
-	din = 16'h2b1f;
-	#5 reset = 0;
-   #20 $finish;
+	din = 16'h0000;
+	#1 reset = 0;
+	#1 din = 16'hb081;
+	#2 din = 16'haf00;
+	#2 din = 16'h1c3a;
+	#2 din = 16'h2300;
+	#20 $finish;
 	end  
 
 always begin
 	#1 clk =!clk ;
 	end
 
-initial begin
-	$display("\t time, \t clk, \t reset, \t din, \t addr_tb, \t mem_en, \t mem_read, \t mem_write");
-	$monitor("%d, \t%b, \t%b, \t%h, \t%h, \t%b, \t%b, \t%b",
-         $time, clk, reset, din, addr_tb, mem_en, mem_read, mem_write);
-	end
 
 endmodule

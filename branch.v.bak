@@ -11,7 +11,7 @@ always@(*) begin
 	else begin
 		if(branch)begin
 			pc_branch = pc + Imm_val;
-			$display("inside Branch %d %d %d", pc, Imm_val, pc_branch);
+			$display("inside Branch");
 		end
 		else
 			pc_branch = pc;

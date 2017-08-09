@@ -278,6 +278,7 @@ always @ (data) begin
 						//SUB SP,Imm
 						$display("Subtract offset from Static Pointer");
 						reg1 = 4'b1101; //SP
+						reg3 = 4'b1101;
 						offset = ((data << 2) & 16'h01ff);
 						opcode = SUB_SP;
 					end

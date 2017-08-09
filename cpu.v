@@ -7,8 +7,8 @@ output wire mem_en, mem_read, mem_write;
 wire [15:0]addr;
 input clk, reset;
 input [15:0]din;
-wire [15:0] new_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
-wire instr_fetch, ALU_src, mem_reg, reg_write, branch_pc; 
+wire [15:0] new_pc, n_pc, branch_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
+wire instr_fetch, ALU_src, mem_reg, reg_write, branch; 
 wire [3:0]reg1, reg2,reg3, opcode, ALU_op, wr_reg;
 
 wire [15:0]offset;
@@ -21,12 +21,13 @@ parameter [1:0] INCREMENT_BY = 2'b10;
 wire [15:0] pc_out;
 //wire [ADDR_WIDTH-1:0] addr;
 
-mux21 m1 (.in0(pc_out), 
+mux21 m1 (.in0(new_pc), 
 	  .in1(branch_pc),   //pc_from_execute
-	  .select(1'b0),    //memory_stage_pc_sel
-	  .out(new_pc));
+	  .select(branch),    //memory_stage_pc_sel
+	  .out(n_pc));
 
-pc p1 (.pc_in(new_pc), 
+pc p1 (	.clk(clk),
+	.pc_in(n_pc), 
        .reset(reset), 
        .pc_out(pc_out));
 
@@ -40,7 +41,7 @@ memory mem1 (.clk(clk),
 	     .dout(instruction));
 */
 pc_increment pc_inc1(.pc_current (pc_out),
-	      .stall(1'b0),
+	      .stall(1'b1),
 	      .increment_by(INCREMENT_BY),
 	      .pc_next(new_pc));
 

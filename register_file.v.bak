@@ -30,6 +30,7 @@ module register_file(clock, rst, WE,InData,WrReg,ReadA,ReadB,OutA,OutB);
 	     regfile[5] = 16'h0000;
 	     regfile[6] = 16'h0000;
 	     regfile[7] = 16'h0000;
+	     
 	     regfile[13] = 16'h2000; // Value for Stack Pointer
              regfile[15] = 16'h0000; 
 

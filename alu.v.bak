@@ -61,7 +61,7 @@ always @(opcode, inA, inB) begin
 	     end
       
         adds_3op: begin
-		{`out_overflow, out} = inA + inB; 
+		{`out_overflow, out} = inA + inB + `in_carry; 
 		$display("ALU ADD inA: %h  inB: %h out:%h", inA, inB, out);
 	     end
        
