@@ -8,7 +8,7 @@ wire [15:0]addr;
 input clk, reset;
 input [15:0]din;
 wire [15:0] new_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
-wire instr_fetch, ALU_src, mem_reg, reg_write; 
+wire instr_fetch, ALU_src, mem_reg, reg_write, branch_pc; 
 wire [3:0]reg1, reg2,reg3, opcode, ALU_op, wr_reg;
 
 wire [15:0]offset;
@@ -22,7 +22,7 @@ wire [15:0] pc_out;
 //wire [ADDR_WIDTH-1:0] addr;
 
 mux21 m1 (.in0(pc_out), 
-	  .in1(16'b0),   //pc_from_execute
+	  .in1(branch_pc),   //pc_from_execute
 	  .select(1'b0),    //memory_stage_pc_sel
 	  .out(new_pc));
 
@@ -139,6 +139,14 @@ apsr ap1(
 .in(apsr_i),
 .out(apsr_o)
 ); 
+
+branch b1(
+.reset(reset), 
+.pc(new_pc), 
+.Imm_val(offset), 
+.branch(branch), 
+.pc_branch(branch_pc)
+);
 
 always@(posedge clk)
  	addr_tb <= addr; 

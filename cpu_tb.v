@@ -28,9 +28,9 @@ memory mem1 (.clk(clk),
 initial begin 
 	clk = 1; 
 	reset = 1; 
-	din = 16'h2b1f;
+	din = 16'he004;
 	#5 reset = 0;
-   	#20 $finish;
+   #20 $finish;
 	end  
 
 always begin

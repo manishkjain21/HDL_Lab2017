@@ -1,9 +1,9 @@
 
-module control_block(clk, rst, opcode, mem_reg, reg_write, branch, mem_read, mem_write, mem_enable, ALU_op, ALU_src, reg_dst, Intr_fetch);
+module control_block(rst, opcode, mem_reg, reg_write, branch, mem_read, mem_write, mem_enable, ALU_op, ALU_src, reg_dst, Intr_fetch);
 
 
 input [3:0] opcode;
-input clk, rst;
+input rst;
 
 output reg [3:0]ALU_op;
 output reg mem_reg, reg_write;  //Select the appropriate Memory for Register Selection and Address Selection
@@ -13,20 +13,20 @@ output reg ALU_src, reg_dst, Intr_fetch;
 localparam  push=0,    pop=1,    sub_sp=2,      cmp=3,       movs=4,      mov=5,   ldr=6,   str=7, 
             ldr_nop=8, add_sp=9, branch_nc= 10, adds_3op=11, branch_c=12, strb=13, ldrb=14, adds_2op=15;
 
-always @(posedge clk) begin
+always @(opcode,rst) begin
 	
 	if(rst) begin
-					$display("Reset %d:", opcode);
+			$display("Reset %d:", opcode);
        			//Set the Control Block
-					mem_reg    = 0;   // Take Data from the ALU
-					reg_write  = 0;   // Write to Register
-					branch     = 0;   //
-					mem_read   = 1;   //
-					mem_write  = 0;   //
-					mem_enable = 1;
-					ALU_op     = opcode;
-					ALU_src    = 0;   // For Reg_data_2
-					reg_dst    = 0;   // Register_Destination	- To mux for selection of Destination Register  
+					mem_reg    <= 0;   // Take Data from the ALU
+					reg_write  <= 0;   // Write to Register
+					branch     <= 0;   //
+					mem_read   <= 1;   //
+					mem_write  <= 0;   //
+					mem_enable <= 1;
+					ALU_op     <= opcode;
+					ALU_src    <= 0;   // For Reg_data_2
+					reg_dst    <= 0;   // Register_Destination	- To mux for selection of Destination Register  
                Intr_fetch = 1;	//intrs_out - 1 ; mem_data_out - 0
    end
 	else begin
@@ -34,29 +34,30 @@ always @(posedge clk) begin
 			push: begin
 					$display("Push %d:", opcode);		
 					//Set the Control Block
-					mem_reg    = 1;   // Take Data from the ALU
-					reg_write  = 1;   // Write to Register
-					branch     = 0;   //
+					mem_reg    <= 1;   // Take Data from the ALU
+					reg_write  <= 1;   // Write to Register
+					branch     <= 0;   //
 					mem_read   = 0;   //
 					mem_write  = 1;   //
 					mem_enable = 1;
 					ALU_op     = opcode;
 					ALU_src    = 0;   // For Reg_data_2
 					reg_dst    = 1;   // Register_Destination -0 - reg2, 1-reg3 selected
-					Intr_fetch = 0;   //intrs_out - 1 ; mem_data_out - 0
+					Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 		   end
       	add_sp: begin
 				   //Set the Control Block
-					mem_reg    = 1;   // Take Data from the ALU
-					reg_write  = 1;   // Write to Register
-					branch     = 0;   //
-					mem_read   = 0;   //
-					mem_write  = 0;   //
-					mem_enable = 0;
-					ALU_op     = opcode;
-					ALU_src    = 1;   // For Immediate Value
-					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3 
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+					$display("Add :%d", opcode);
+					mem_reg    <= 1;   // Take Data from the ALU
+					reg_write  <= 1;   // Write to Register
+					branch     <= 0;   //
+					mem_read   <= 0;   //
+					mem_write  <= 0;   //
+					mem_enable <= 0;
+					ALU_op     <= opcode;
+					ALU_src    <= 1;   // For Immediate Value
+					reg_dst    <= 1;   // Register_Destination	- 0 - reg2, 1 - reg3 
+				   	Intr_fetch <= 1;   //intrs_out - 1 ; mem_data_out - 0
 			end 
 	   	pop:begin
 					//Set the Control Block

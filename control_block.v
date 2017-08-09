@@ -18,15 +18,15 @@ always @(opcode,rst) begin
 	if(rst) begin
 			$display("Reset %d:", opcode);
        			//Set the Control Block
-					mem_reg    <= 0;   // Take Data from the ALU
-					reg_write  <= 0;   // Write to Register
-					branch     <= 0;   //
-					mem_read   <= 1;   //
-					mem_write  <= 0;   //
-					mem_enable <= 1;
-					ALU_op     <= opcode;
-					ALU_src    <= 0;   // For Reg_data_2
-					reg_dst    <= 0;   // Register_Destination	- To mux for selection of Destination Register  
+					mem_reg    = 0;   // Take Data from the ALU
+					reg_write  = 0;   // Write to Register
+					branch     = 0;   //
+					mem_read   = 1;   //
+					mem_write  = 0;   //
+					mem_enable = 1;
+					ALU_op     = opcode;
+					ALU_src    = 0;   // For Reg_data_2
+					reg_dst    = 0;   // Register_Destination	- To mux for selection of Destination Register  
                Intr_fetch = 1;	//intrs_out - 1 ; mem_data_out - 0
    end
 	else begin
@@ -34,9 +34,9 @@ always @(opcode,rst) begin
 			push: begin
 					$display("Push %d:", opcode);		
 					//Set the Control Block
-					mem_reg    <= 1;   // Take Data from the ALU
-					reg_write  <= 1;   // Write to Register
-					branch     <= 0;   //
+					mem_reg    = 1;   // Take Data from the ALU
+					reg_write  = 1;   // Write to Register
+					branch     = 0;   //
 					mem_read   = 0;   //
 					mem_write  = 1;   //
 					mem_enable = 1;
@@ -48,16 +48,16 @@ always @(opcode,rst) begin
       	add_sp: begin
 				   //Set the Control Block
 					$display("Add :%d", opcode);
-					mem_reg    <= 1;   // Take Data from the ALU
-					reg_write  <= 1;   // Write to Register
-					branch     <= 0;   //
-					mem_read   <= 0;   //
-					mem_write  <= 0;   //
-					mem_enable <= 0;
-					ALU_op     <= opcode;
-					ALU_src    <= 1;   // For Immediate Value
-					reg_dst    <= 1;   // Register_Destination	- 0 - reg2, 1 - reg3 
-				   	Intr_fetch <= 1;   //intrs_out - 1 ; mem_data_out - 0
+					mem_reg    = 1;   // Take Data from the ALU
+					reg_write  = 1;   // Write to Register
+					branch     = 0;   //
+					mem_read   = 0;   //
+					mem_write  = 0;   //
+					mem_enable = 0;
+					ALU_op     = opcode;
+					ALU_src    = 1;   // For Immediate Value
+					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3 
+				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 			end 
 	   	pop:begin
 					//Set the Control Block

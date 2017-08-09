@@ -1,10 +1,10 @@
-/*
-`timescale 1 ns / 1 ps*/
+<<<<<<< HEAD
+timescale 1 ns / 1 ps
 /**
 Instruction Decode block
 This block accepts instuction code as an input.
 The output of the blocks are two registers in operation and an offset, if applicable.
-*//*
+*/
 module decode(
 	data,
 	reset,
@@ -210,8 +210,7 @@ always @ (data) begin
 		end
 	end
 
-enmodule
-**/
+=======
 `timescale 1 ns / 1 ps
 /**
 Instruction Decode block
