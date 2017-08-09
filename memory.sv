@@ -27,7 +27,7 @@ input	logic						clk;
 input	logic						en;
 input	logic						rd_en;
 input	logic 					wr_en;
-input	logic [15:0]			din;
+input	logic [15:0] din;
 output	logic [15:0]			dout;
 input	logic [ADDR_WIDTH-1:0] 		addr;
 

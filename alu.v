@@ -42,23 +42,37 @@ always @(opcode, inA, inB) begin
 	sub_sp: begin
 //		 out = inA - inB;
 		 //if(out==0) `out_zero = 0;
-		 $display("SUB_SP");
+		 out = inA - inB ; 
+		if(out==0) `out_zero = 1'b1 ;
+		`out_overflow = `in_overflow ;
+		`out_negative = `in_negative ;
+		`out_carry = `in_carry ;
+		$display("ALU SUB inA: %h  inB: %h out:%h", inA, inB, out);
 	     end
 	
 	add_sp: begin
-//		{`out_overflow, out} = inA + inB + `in_carry; 
+		{`out_overflow, out} = inA + inB +`in_carry; 
+		$display("ALU ADD inA: %h  inB: %h out:%h", inA, inB, out);
 	     end
    
         adds_2op: begin
-//		{`out_overflow, out} = inA + inB + `in_carry; 
+		{`out_overflow, out} = inA + inB + `in_carry; 
+		$display("ALU ADD 2OP inA: %h  inB: %h out:%h", inA, inB, out);
 	     end
       
         adds_3op: begin
-//		{`out_overflow, out} = inA + inB + `in_carry; 
+		{`out_overflow, out} = inA + inB + `in_carry; 
+		$display("ALU ADD inA: %h  inB: %h out:%h", inA, inB, out);
 	     end
        
 	cmp: begin
-//		 if(inA==inB) `out_zero = 0;
+		 out= inA-inB;
+		 if(out==0) `out_zero = 1'b1 ;
+		 else `out_zero = 1'b0 ;
+		`out_overflow = `in_overflow ;
+		`out_negative = `in_negative ;
+		`out_carry = `in_carry ;
+		$display("CMP inA=%h inB=%h ZF=%b",inA, inB, `out_zero);
 	     end
 	
 	str: begin
@@ -68,15 +82,37 @@ always @(opcode, inA, inB) begin
 	     end
 
 	branch_c: begin
-	
+		if(`in_zero) begin
+			out=inA;
+			`out_zero= 1'b0;
+		end
+                else `out_zero= `in_zero;
+		`out_overflow = `in_overflow ;
+		`out_negative = `in_negative ;
+		`out_carry = `in_carry ;
 	     end
 
 	branch_nc: begin
 		out=inA;
 	    end
 
-	mov: begin
+	movs: begin
+		out= inA + inB;
+		`out_carry = `in_carry ;
+		`out_overflow = `in_overflow ;
+		`out_negative = `in_negative ;
+		`out_zero = `in_zero ;
+		$display("ALU MOVS inA: %h  inB: %h out:%h", inA, inB, out);
 	     end
+
+	mov: begin
+		out= inB;
+		`out_carry = `in_carry ;
+		`out_overflow = `in_overflow ;
+		`out_negative = `in_negative ;
+		`out_zero = `in_zero ;
+		$display("ALU MOV inA: %h  inB: %h out:%h", inA, inB, out);
+	end
 
 
 	endcase

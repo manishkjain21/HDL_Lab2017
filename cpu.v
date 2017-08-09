@@ -9,9 +9,9 @@ input clk, reset;
 input [15:0]din;
 wire [15:0] new_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
 wire instr_fetch, ALU_src, mem_reg, reg_write; 
-wire [3:0]reg1, reg2, opcode, ALU_op, wr_reg;
+wire [3:0]reg1, reg2,reg3, opcode, ALU_op, wr_reg;
 
-wire [11:0]offset;
+wire [15:0]offset;
 
 //4096*2B=8192B
 parameter MEM_DEPTH = 2**12;
@@ -45,15 +45,15 @@ pc_increment pc_inc1(.pc_current (pc_out),
 	      .pc_next(new_pc));
 
 decode d1(
-.data(dout), //change this to instr_out
+.data(din), //(dout)
 .reg1(reg1), 
-.reg2(reg2), 
+.reg2(reg2),
+.reg3(reg3), 
 .offset(offset), 
-.opcode(opcode)
+.opcode(opcode)  
 );
 
 control_block ctrl1(
-.clk(clk),
 .rst(reset), 
 .opcode(opcode), 
 .mem_reg(mem_reg), 
@@ -79,12 +79,12 @@ register_file rf1(
 .OutA(Reg_data1),
 .OutB(Reg_data2)
 );
-
+/*
 sign_extend sg1(
 .clk(clk), 
 .offset(offset), 
 .signed_value(signed_value)
-);
+);*/
 
 alu a1(
 .opcode(ALU_op), 
@@ -95,9 +95,10 @@ alu a1(
 .out_apsr(apsr_i)
 );
 
+//Mux for ALU Op2
 mux21 m2(
 .in0(Reg_data2), 
-.in1(signed_value), 
+.in1(offset), //(signed_val) 
 .select(ALU_src), 
 .out(ALU_mux)
 );
@@ -111,8 +112,8 @@ mux21 m3(
 );
 
 mux21_4bit m6(
-.inA(reg1), 
-.inB(4'b0), 		//Value of reg3 from Decode
+.inA(reg2), 
+.inB(reg3), 		//Value of reg3 from Decode
 .sel(reg_dst), 
 .out(wr_reg)
 
@@ -127,19 +128,20 @@ mux21 m5(
 
 demux12 m4(
 .in(din), 
-.sel(instr_fetch), 
+.sel(1'b1), //.sel(instr_fetch) 
 .outA(demux_reg), 
 .outB(instr_out)
 );
 
 apsr ap1(
+.rst(reset),
 .clk(clk),
 .in(apsr_i),
 .out(apsr_o)
-);
+); 
 
 always@(posedge clk)
- addr_tb <= addr;
+ 	addr_tb <= addr; 
 
 endmodule
 

@@ -22,17 +22,17 @@ module register_file(clock, rst, WE,InData,WrReg,ReadA,ReadB,OutA,OutB);
         OutA = 0; //random values for initial 
         OutB = 0; 
         
-		  regfile[0] = 16'h0000;
+	     regfile[0] = 16'h0000;
 	     regfile[1] = 16'h0000;
 	     regfile[2] = 16'h0000;
 	     regfile[3] = 16'h0000;
 	     regfile[4] = 16'h0000;
 	     regfile[5] = 16'h0000;
 	     regfile[6] = 16'h0000;
-	     regfile[7] = 16'h0000;
+	     regfile[7] = 16'h1111;
 	     
 	     regfile[13] = 16'h2000; // Value for Stack Pointer
-        regfile[15] = 16'h0000; 
+             regfile[15] = 16'h0000; 
 
         end 
     end
@@ -43,7 +43,7 @@ module register_file(clock, rst, WE,InData,WrReg,ReadA,ReadB,OutA,OutB);
        if(WE && clock) // For transferring the data on the positive level of the clock
         begin 
          regfile[WrReg]<=InData;//write to register 
-         $display("Does WrReg: %d Data: %d",WrReg,InData); 
+         $display("Does WrReg: %h Data: %h",WrReg,InData); 
         end 
 
     end 
@@ -54,7 +54,7 @@ module register_file(clock, rst, WE,InData,WrReg,ReadA,ReadB,OutA,OutB);
         begin 
       OutA <= regfile[ReadA];//read values from registers 
       OutB <= regfile[ReadB]; 
-      $monitor  ("R0:  %d  R1:  %d  R2  %d  R7:  %d  SP:  %d  PC:  %d",regfile[0],regfile[1],regfile[2],regfile[7],regfile[13],regfile[15]); 
+      $monitor  ("R0:  %h  R1:  %h  R2  %h  R7:  %h  SP:  %h  PC:  %h",regfile[0],regfile[1],regfile[2],regfile[7],regfile[13],regfile[15]); 
       end 
     end 
  

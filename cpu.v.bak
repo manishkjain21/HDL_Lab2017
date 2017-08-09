@@ -45,7 +45,7 @@ pc_increment pc_inc1(.pc_current (pc_out),
 	      .pc_next(new_pc));
 
 decode d1(
-.data(dout), 
+.data(dout), //change this to instr_out
 .reg1(reg1), 
 .reg2(reg2), 
 .offset(offset), 
@@ -111,8 +111,8 @@ mux21 m3(
 );
 
 mux21_4bit m6(
-.inA(reg1), 
-.inB(4'b0), 		//Value of reg3 from Decode
+.in0(reg1), 
+.in1(reg3), 		//Value of reg3 from Decode
 .sel(reg_dst), 
 .out(wr_reg)
 
@@ -120,7 +120,7 @@ mux21_4bit m6(
 
 mux21 m5(
 .in0(ALU_out), 
-.in1(pc_out), 		//Value of reg3 from Decode
+.in1(pc_out), 		
 .select(instr_fetch), 
 .out(addr)
 );
@@ -138,8 +138,9 @@ apsr ap1(
 .out(apsr_o)
 );
 
-always@(posedge clk)
+always@(posedge clk) begin
  addr_tb <= addr;
+ dout <= Reg_data2;	
 
 endmodule
 

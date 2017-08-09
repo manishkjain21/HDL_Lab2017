@@ -61,7 +61,7 @@ end
 //RESET GENERATOR  
 initial begin
    $monitor("%d", clk);	
-   rst			= 1'b0;
+        rst		= 1'b0;
 	file		= $fopen(filename, "r");
    
 	#3 rst		= 1'b1;     // 3   ns
