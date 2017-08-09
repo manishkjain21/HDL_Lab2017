@@ -7,11 +7,13 @@ output wire mem_en, mem_read, mem_write;
 wire [15:0]addr;
 input clk, reset;
 input [15:0]din_cpu;
-wire [15:0] new_pc, n_pc, din, branch_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
+wire [15:0] new_pc, n_pc, branch_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
 wire instr_fetch, ALU_src, mem_reg, reg_write, branch; 
 wire [3:0]reg1, reg2,reg3, opcode, ALU_op, wr_reg;
-
+reg [15:0]din;
 wire [15:0]offset;
+
+wire [7:0]reg_list;
 
 //4096*2B=8192B
 parameter MEM_DEPTH = 2**12;
@@ -55,7 +57,9 @@ decode d1(
 	.data(din), //(dout)
 	.reg1(reg1), 
 	.reg2(reg2),
-	.reg3(reg3), 
+	.reg3(reg3),
+	.rlist(reg_list),		//8-bit value 
+	.cond(branch_cond),
 	.offset(offset), 
 	.opcode(opcode)  
 );

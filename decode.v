@@ -339,8 +339,8 @@ always @ (data) begin
 				end
 					
 				4'h6: begin
-					reg1 = 4'b0;
-					reg2 = {1'b0, data[5:3]};
+					reg1 = {1'b0, data[5:3]};
+					reg2 = 4'b0;
 					reg3 = {1'b0, data[2:0]};
 					offset = {11'b0, data[10:6]}; 
 					if(data[11]==1'b0) begin
@@ -412,7 +412,9 @@ always @ (data) begin
 					offset = {8'b0, data[7:0]};
 					opcode = ADDS_2OP;
 				end
-
+				
+				
+				
 				default: begin
 						reg1 = 4'b0;
 						reg2 = 4'b0;
