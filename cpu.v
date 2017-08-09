@@ -1,16 +1,16 @@
 
-module cpu(clk, reset, addr_tb, mem_en, mem_read, mem_write, dout, din);
+module cpu(clk, reset, addr_tb, mem_en, mem_read, mem_write, dout_cpu, din_cpu);
 
 output reg [11:0]addr_tb;
-output reg [15:0]dout;
+output reg [15:0]dout_cpu;
 output wire mem_en, mem_read, mem_write;
 wire [15:0]addr;
 input clk, reset;
-input [15:0]din;
+input [15:0]din_cpu;
 wire [15:0] new_pc, n_pc, branch_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
 wire instr_fetch, ALU_src, mem_reg, reg_write, branch; 
 wire [3:0]reg1, reg2,reg3, opcode, ALU_op, wr_reg;
-
+reg [15:0]din;
 wire [15:0]offset;
 
 //4096*2B=8192B
@@ -21,15 +21,19 @@ parameter [1:0] INCREMENT_BY = 2'b10;
 wire [15:0] pc_out;
 //wire [ADDR_WIDTH-1:0] addr;
 
-mux21 m1 (.in0(new_pc), 
-	  .in1(branch_pc),   //pc_from_execute
-	  .select(branch),    //memory_stage_pc_sel
-	  .out(n_pc));
+mux21 m1(
+	.in0(new_pc), 
+	.in1(branch_pc),   //pc_from_execute
+	.select(branch),    //memory_stage_pc_sel
+	.out(n_pc)
+);
 
-pc p1 (	.clk(clk),
+pc p1(	
+	.clk(clk),
 	.pc_in(n_pc), 
-       .reset(reset), 
-       .pc_out(pc_out));
+   .reset(reset), 
+   .pc_out(pc_out)
+);
 
 /*
 memory mem1 (.clk(clk),
@@ -40,45 +44,47 @@ memory mem1 (.clk(clk),
 	     .din(1'b0),    //Reg_data2
 	     .dout(instruction));
 */
-pc_increment pc_inc1(.pc_current (pc_out),
-	      .stall(1'b1),
-	      .increment_by(INCREMENT_BY),
-	      .pc_next(new_pc));
+pc_increment pc_inc1(
+	.pc_current (pc_out),
+   .stall(1'b1),
+   .increment_by(INCREMENT_BY),
+   .pc_next(new_pc)
+);
 
 decode d1(
-.data(din), //(dout)
-.reg1(reg1), 
-.reg2(reg2),
-.reg3(reg3), 
-.offset(offset), 
-.opcode(opcode)  
+	.data(din), //(dout)
+	.reg1(reg1), 
+	.reg2(reg2),
+	.reg3(reg3), 
+	.offset(offset), 
+	.opcode(opcode)  
 );
 
 control_block ctrl1(
-.rst(reset), 
-.opcode(opcode), 
-.mem_reg(mem_reg), 
-.reg_write(reg_write), 
-.branch(branch), 
-.mem_read(mem_read), 
-.mem_write(mem_write), 
-.mem_enable(mem_en), 
-.ALU_op(ALU_op), 
-.ALU_src(ALU_src), 
-.reg_dst(reg_dst),
-.Intr_fetch(instr_fetch)
+	.rst(reset), 
+	.opcode(opcode), 
+	.mem_reg(mem_reg), 
+	.reg_write(reg_write), 
+	.branch(branch), 
+	.mem_read(mem_read), 
+	.mem_write(mem_write), 
+	.mem_enable(mem_en), 
+	.ALU_op(ALU_op), 
+	.ALU_src(ALU_src), 
+	.reg_dst(reg_dst),
+	.Intr_fetch(instr_fetch)
 );
 
 register_file rf1(
-.clock(clk),
-.rst(reset),
-.WE(reg_write),
-.InData(Reg_out),
-.WrReg(wr_reg),
-.ReadA(reg1),
-.ReadB(reg2),
-.OutA(Reg_data1),
-.OutB(Reg_data2)
+	.clock(clk),
+	.rst(reset),
+	.WE(reg_write),
+	.InData(Reg_out),
+	.WrReg(wr_reg),
+	.ReadA(reg1),
+	.ReadB(reg2),
+	.OutA(Reg_data1),
+	.OutB(Reg_data2)
 );
 /*
 sign_extend sg1(
@@ -129,7 +135,7 @@ mux21 m5(
 
 demux12 m4(
 .in(din), 
-.sel(1'b1), //.sel(instr_fetch) 
+.sel(instr_fetch), //.sel(instr_fetch) 
 .outA(demux_reg), 
 .outB(instr_out)
 );
@@ -149,8 +155,12 @@ branch b1(
 .pc_branch(branch_pc)
 );
 
-always@(posedge clk)
+always@(posedge clk) begin
  	addr_tb <= addr; 
+	din <= {din_cpu[7:0], din_cpu[15:8]};
+	dout_cpu <= {Reg_data2[7:0], Reg_data2[15:8]};
+end
+
 
 endmodule
 

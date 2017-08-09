@@ -14,8 +14,8 @@ cpu cp1(.clk(clk),
 .mem_en(mem_en), 
 .mem_read(mem_read), 
 .mem_write(mem_write), 
-.dout(dout), 
-.din(din));
+.dout_cpu(dout), 
+.din_cpu(din_1));
 
 memory mem1 (.clk(clk),
 	     .en(mem_en),
@@ -28,15 +28,15 @@ memory mem1 (.clk(clk),
 initial begin 
 	$display("\t time, \t clk, \t reset, \t din, \t addr_tb, \t mem_en, \t mem_read, \t mem_write");
 	$monitor("%d, \t%b, \t%b, \t%h, \t%h, \t%b, \t%b, \t%b",
-         $time, clk, reset, din, addr_tb, mem_en, mem_read, mem_write);	
+         $time, clk, reset, din_1, din, addr_tb, mem_en, mem_read, mem_write);	
 	clk = 1; 
 	reset = 1; 
 	din = 16'h0000;
 	#1 reset = 0;
-	#1 din = 16'hb081;
-	#2 din = 16'haf00;
-	#2 din = 16'h1c3a;
-	#2 din = 16'h2300;
+	#1 din = din_1;//din = 16'hb081;
+	#2 din = din_1;//din = 16'haf00;
+	#2 din = din_1;//din = 16'h1c3a;
+	#2 din = din_1;//din = 16'h2300;
 	#6 $finish;
 	end  
 
