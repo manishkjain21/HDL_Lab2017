@@ -13,10 +13,10 @@ output reg ALU_src, reg_dst, Intr_fetch;
 localparam  push=0,    pop=1,    sub_sp=2,      cmp=3,       movs=4,      mov=5,   ldr=6,   str=7, 
             ldr_nop=8, add_sp=9, branch_nc= 10, adds_3op=11, branch_c=12, strb=13, ldrb=14, adds_2op=15;
 
-always @(opcode,rst) begin
+always @(rst, opcode) begin
 	
 	if(rst) begin
-			$display("Reset %d:", opcode);
+					$display("Reset %d:", opcode);
        			//Set the Control Block
 					mem_reg    = 0;   // Take Data from the ALU
 					reg_write  = 0;   // Write to Register
@@ -57,7 +57,7 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 1;   // For Immediate Value
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3 
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 				end 
 	   		pop:begin
 					//Set the Control Block
@@ -70,7 +70,7 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 0;   // For Reg_data_2
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 0;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 0;   //intrs_out - 1 ; mem_data_out - 0
 				end
 			sub_sp:begin
 					//Set the Control Block
@@ -83,7 +83,7 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 1;   // For reg_dat2 - 0; Immediate Value - 1
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 				end
 			cmp:begin
 					//Set the Control Block
@@ -96,7 +96,7 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 1;   // For 0- Reg_data2 1- Immediate Value
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 				end	
 			movs:begin
 					//Set the Control Block
@@ -109,13 +109,13 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 1;   // For 0- Reg_data2 1- Immediate Value
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 				end	
 
 			branch_c:begin
 					//Set the Control Block
 					mem_reg    = 1;   // Take Data from the ALU for writing
-					reg_write  = 1;   // write needed to register file
+					reg_write  = 0;   // write needed to register file
 					branch     = 1;   // 
 					mem_read   = 0;   //
 					mem_write  = 0;   //
@@ -123,7 +123,8 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 1;   // For 0- Reg_data2 1- Immediate Value
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+					$display("Inside Branch C");
 				end
 
 			mov:begin
@@ -137,7 +138,7 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 0;   // For 0- Reg_data2 1- Immediate Value
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 				end	
 	
 			ldr:begin
@@ -151,7 +152,7 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 1;   // For 0- Reg_data2 1- Immediate Value
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 				end
 			
 			str:begin
@@ -165,7 +166,7 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 0;   // For 0- Reg_data2 1- Immediate Value
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 				end
 			
 			branch_nc:begin
@@ -245,7 +246,7 @@ always @(opcode,rst) begin
 					ALU_op     = opcode;
 					ALU_src    = 1;   // For 0- Reg_data2 1- Immediate Value
 					reg_dst    = 1;   // Register_Destination	- 0 - reg2, 1 - reg3  
-				   Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
+				   	Intr_fetch = 1;   //intrs_out - 1 ; mem_data_out - 0
 				end
 	
 			default: begin

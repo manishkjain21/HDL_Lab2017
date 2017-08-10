@@ -1,0 +1,137 @@
+/home/vhdlp7/Desktop/HDL_Lab2017/mux21_tb.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/mux21_tb.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module mux21_tb
+
+Top level modules:
+	mux21_tb
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/fetch.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/fetch.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module fetch
+
+Top level modules:
+	fetch
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/pc.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/pc.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module pc
+
+Top level modules:
+	pc
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/control_block.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/control_block.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module control_block
+
+Top level modules:
+	control_block
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/testbench.sv {1 {vlog -work work -vopt -sv -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/testbench.sv
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module testbench
+
+Top level modules:
+	testbench
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/reg_control_tb.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/reg_control_tb.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/memory.sv {1 {vlog -work work -vopt -sv -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/memory.sv
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module memory
+
+Top level modules:
+	memory
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/apsr.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/apsr.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module apsr
+
+Top level modules:
+	apsr
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/demux12.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/demux12.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module demux12
+
+Top level modules:
+	demux12
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/pc_increment.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/pc_increment.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module pc_increment
+
+Top level modules:
+	pc_increment
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/mux21_4bit.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/mux21_4bit.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module mux21_4bit
+
+Top level modules:
+	mux21_4bit
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/control_block_tb.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/control_block_tb.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module control_block_tb
+
+Top level modules:
+	control_block_tb
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/register_file_tb.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/register_file_tb.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module register_file_tb
+
+Top level modules:
+	register_file_tb
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/alu.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/alu.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module alu
+
+Top level modules:
+	alu
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/decode.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/decode.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module decode
+
+Top level modules:
+	decode
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/register_file.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/register_file.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module register_file
+
+Top level modules:
+	register_file
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/cpu_tb.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/cpu_tb.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module cpu_tb
+
+Top level modules:
+	cpu_tb
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/sign_extend_tb.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/sign_extend_tb.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module sign_extend_tb
+
+Top level modules:
+	sign_extend_tb
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/mux21.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/mux21.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module mux21
+
+Top level modules:
+	mux21
+
+} {} {}} /home/vhdlp7/Desktop/HDL_Lab2017/sign_extend.v {1 {vlog -work work -vopt -stats=none /home/vhdlp7/Desktop/HDL_Lab2017/sign_extend.v
+Model Technology ModelSim SE-64 vlog 10.3d Compiler 2014.10 Oct  6 2014
+-- Compiling module sign_extend
+
+Top level modules:
+	sign_extend
+
+} {} {}}

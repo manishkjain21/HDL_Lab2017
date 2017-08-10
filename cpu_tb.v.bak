@@ -15,8 +15,10 @@ cpu cp1(.clk(clk),
 .mem_read(mem_read), 
 .mem_write(mem_write), 
 .dout_cpu(dout), 
-.din_cpu(din_1));
+.din_cpu(din)
 
+);
+/*
 memory mem1 (.clk(clk),
 	     .en(mem_en),
 	     .rd_en(mem_read),
@@ -24,19 +26,22 @@ memory mem1 (.clk(clk),
 	     .addr(addr_tb),
 	     .din(dout),    //Reg_data2
 	     .dout(din_1));
-
+*/
 initial begin 
 	$display("\t time, \t clk, \t reset, \t din, \t addr_tb, \t mem_en, \t mem_read, \t mem_write");
-	$monitor("%d, \t%b, \t%b, \t%h, \t%h, \t%b, \t%b, \t%b",
-         $time, clk, reset, din_1, din, addr_tb, mem_en, mem_read, mem_write);	
-	clk = 1; 
+	$monitor("%d, \t%b, \t%b, \t%h, \t%b, \t%b, \t%b",
+         $time, clk, reset, din, mem_en, mem_read, mem_write);	
+	din = 16'h0000;		
+	clk = 0; 
 	reset = 1; 
-	din = 16'h0000;
+	
 	#1 reset = 0;
-	#1 din = din_1;//din = 16'hb081;
-	#2 //din = 16'haf00;
-	#2 //din = 16'h1c3a;
-	#2 //din = 16'h2300;
+	#2 din = 16'hb081; //din = din_1;
+//	#2 din = 16'haf00; //din = din_1;
+//	#2 din = 16'h1c3a; //din = din_1;
+//	#2 din = 16'h2300; //din = din_1;
+//	#2 din = 16'he004;
+//	#2 din = 16'hddf6;
 	#6 $finish;
 	end  
 

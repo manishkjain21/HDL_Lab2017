@@ -9,7 +9,7 @@ input clk, reset;
 input [15:0]din_cpu;
 wire [15:0] new_pc, n_pc, branch_pc, instruction, Reg_out, Reg_data1, Reg_data2, signed_value, ALU_mux, instr_out, apsr_o, apsr_i, ALU_out, demux_reg ;
 wire instr_fetch, ALU_src, mem_reg, reg_write, branch; 
-wire [3:0]reg1, reg2,reg3, opcode, ALU_op, wr_reg, branch_cond;
+wire [3:0]reg1, reg2,reg3, opcode, ALU_op, wr_reg, branch_cond, rlist_size;
 reg [15:0]din;
 wire [15:0]offset;
 
@@ -33,33 +33,27 @@ mux21 m1(
 pc p1(	
 	.clk(clk),
 	.pc_in(n_pc), 
-   .reset(reset), 
-   .pc_out(pc_out)
+   	.reset(reset), 
+   	.pc_out(pc_out)
 );
 
-/*
-memory mem1 (.clk(clk),
-	     .en(mem_enable),
-	     .rd_en(mem_read),
-	     .wr_en(mem_write),
-	     .addr(addr),
-	     .din(1'b0),    //Reg_data2
-	     .dout(instruction));
-*/
+
 pc_increment pc_inc1(
 	.pc_current (pc_out),
-   .stall(1'b1),
-   .increment_by(INCREMENT_BY),
-   .pc_next(new_pc)
+	.stall(1'b0),
+	.increment_by(INCREMENT_BY),
+	.pc_next(new_pc)
 );
 
 decode d1(
-	.data(din), //(dout)
+	.data(din_cpu), //din
+	.reset(reset),
 	.reg1(reg1), 
 	.reg2(reg2),
 	.reg3(reg3),
-	.rlist(reg_list),		//8-bit value 
-	.cond(branch_cond),
+	.r_list(reg_list),		//8-bit value 
+	.r_list_size(rlist_size),	//4-bit value
+	.cond(branch_cond),		//4-bit value
 	.offset(offset), 
 	.opcode(opcode)  
 );
@@ -103,7 +97,8 @@ alu a1(
 .inB(ALU_mux),
 .in_apsr(apsr_o), 
 .out(ALU_out), 
-.out_apsr(apsr_i)
+.out_apsr(apsr_i),
+.branch_con(branch_con)
 );
 
 //Mux for ALU Op2
@@ -138,8 +133,8 @@ mux21 m5(
 );
 
 demux12 m4(
-.in(din), 
-.sel(instr_fetch), //.sel(instr_fetch) 
+.in(din_cpu), 
+.sel(1'b1), //.sel(instr_fetch) 
 .outA(demux_reg), 
 .outB(instr_out)
 );
@@ -152,19 +147,21 @@ apsr ap1(
 ); 
 
 branch b1(
+.clk(clk),
 .reset(reset), 
 .pc(new_pc), 
 .Imm_val(offset), 
 .branch(branch), 
+.branch_con(branch_con),
 .pc_branch(branch_pc)
 );
-
-always@(posedge clk) begin
- 	addr_tb <= addr; 
-	din <= {din_cpu[7:0], din_cpu[15:8]};
-	dout_cpu <= {Reg_data2[7:0], Reg_data2[15:8]};
+/*
+always@(*) begin
+ 	addr_tb = addr; 
+	din = {din_cpu[7:0], din_cpu[15:8]};
+	dout_cpu = {Reg_data2[7:0], Reg_data2[15:8]};
 end
-
+*/
 
 endmodule
 

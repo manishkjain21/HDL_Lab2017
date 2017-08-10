@@ -1,10 +1,11 @@
 `timescale 1ns/1ps
 
-module alu(opcode, inA, inB,in_apsr, out, out_apsr);
+module alu(opcode, inA, inB,in_apsr, out, out_apsr, branch_con);
 
 input [3:0] opcode;
 input [15:0] inA, inB, in_apsr;
-output reg [15:0] out, out_apsr; 
+output reg [15:0] out, out_apsr;
+output reg branch_con; 
 
 localparam  push=0, pop=1, sub_sp=2, cmp=3, movs=4, mov=5, ldr=6, str=7, 
             ldr_nop=8, add_sp=9, branch_nc= 10, adds_3op=11, branch_c=12, strb=13, ldrb=14, adds_2op=15;
@@ -21,7 +22,7 @@ localparam  push=0, pop=1, sub_sp=2, cmp=3, movs=4, mov=5, ldr=6, str=7,
 `define out_negative out_apsr[3]
 
 always @(opcode, inA, inB) begin
-
+	branch_con = 1'b0;
 	case(opcode)
 	push: begin //inA= Stack Pointer  
 		out <= inA-1;
@@ -61,7 +62,7 @@ always @(opcode, inA, inB) begin
 	     end
       
         adds_3op: begin
-		{`out_overflow, out} = inA + inB + `in_carry; 
+		{`out_overflow, out} = inA + inB; 
 		$display("ALU ADD inA: %h  inB: %h out:%h", inA, inB, out);
 	     end
        
@@ -85,6 +86,7 @@ always @(opcode, inA, inB) begin
 		if(`in_zero) begin
 			out=inA;
 			`out_zero= 1'b0;
+			branch_con = 1'b1;
 		end
                 else `out_zero= `in_zero;
 		`out_overflow = `in_overflow ;
@@ -94,6 +96,7 @@ always @(opcode, inA, inB) begin
 
 	branch_nc: begin
 		out=inA;
+		branch_con = 1'b1;
 	    end
 
 	movs: begin

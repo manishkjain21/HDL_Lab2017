@@ -32,7 +32,7 @@ localparam  PUSH = 0, POP = 1, SUB_SP = 2, CMP = 3, MOVS = 4, MOV = 5, LDR = 6, 
             LDR_NOP = 8, ADD_SP = 9, BRANCH_NC = 10, ADDS_3OP = 11, BRANCH_C = 12, STRB = 13, LDRB = 14, ADDS_2OP = 15;
 
 
-always @ (data) begin
+always @ (data, reset) begin
 	if(reset) begin
 		reg1 = 4'b0;
 		reg2 = 4'b0;
@@ -174,7 +174,7 @@ always @ (data) begin
 				4'hD: //branch c
 				begin
 					$display("Conditional Branching");
-					offset = {7'b0, (data[7:0] << 1)};
+					offset = data[7]? {7'b1, (data[7:0] << 1)}:{7'b0, (data[7:0] << 1)};
 					cond = data[11:8];
 					opcode = BRANCH_C;
 				end
