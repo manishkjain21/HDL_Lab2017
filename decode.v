@@ -22,14 +22,15 @@ input reset; //Active high Synchronous reset
 
 //outputs
 output reg [15:0] offset; //immediate value
-output reg [3:0] reg1, reg2, reg3, opcode; //reg1 -> usually sp or pc or lr, reg2 -> source register, reg3 -> destination register
+output reg [3:0] reg1, reg2, reg3; //reg1 -> usually sp or pc or lr, reg2 -> source register, reg3 -> destination register
 output reg [7:0] r_list; //register list for push and pop instructions
 output reg [3:0] cond; //condtion for branching
 output reg [3:0] r_list_size; //count of the registers to be pushed or popped excluding LR
+output reg [4:0] opcode;
 
 
 localparam  PUSH = 0, POP = 1, SUB_SP = 2, CMP = 3, MOVS = 4, MOV = 5, LDR = 6, STR = 7, 
-            LDR_NOP = 8, ADD_SP = 9, BRANCH_NC = 10, ADDS_3OP = 11, BRANCH_C = 12, STRB = 13, LDRB = 14, ADDS_2OP = 15;
+            LDR_NOP = 8, ADD_SP = 9, BRANCH_NC = 10, ADDS_3OP = 11, BRANCH_C = 12, STRB = 13, LDRB = 14, ADDS_2OP = 15, NOP = 16;
 
 
 always @ (data, reset) begin
@@ -41,7 +42,7 @@ always @ (data, reset) begin
 		r_list_size = 3'b0;
 		cond = 4'b0;
 		offset = 16'b0;
-		opcode = 4'b0;
+		opcode = 5'b0;
 	end
 
 	else begin
@@ -211,7 +212,7 @@ always @ (data, reset) begin
 						reg2 = 4'b0;
 						reg3 = 4'b0;
 						offset = 16'b0;
-						opcode = 4'b0;
+						opcode = 5'b10000;
 					end	
 			endcase
 		end
